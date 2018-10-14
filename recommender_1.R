@@ -1,0 +1,10 @@
+data <- read.csv('crop_production.csv')
+data$Yield <- data$Production / data$Area
+state <- as.data.frame(subset(data, data$State_Name == "Gujarat"))
+district <- subset(state, state$District_Name == "AHMADABAD")
+train <- data.frame(district$Crop,district$Season,district$Yield)
+colnames(train) <- c("Crop", "Season", "Yield")
+rating <- dcast(train, Season~Crop , value.var ="Yield", fun.aggregate=mean)
+rating2 <- as.matrix(rating[,-1])
+ratingmat <- as(rating2, "realRatingMatrix")
+ratingmat <- normalize(ratingmat)
