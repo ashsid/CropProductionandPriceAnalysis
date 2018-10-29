@@ -20,3 +20,12 @@ ratingmat <- as(rating2, "realRatingMatrix")
 ratingmat <- normalize(ratingmat)
 
 #Final Matrix
+
+rec_mod <- Recommender(ratingmat, method = "UBCF", param=list(method="Cosine",nn=10))
+#The recommender method that uses cosine similarity to recommend the best 5 crops in the given area/district.
+
+Top_5_pred <- predict(rec_mod, ratingmat[1], n=5)
+
+Top_5_List = as(Top_5_pred, "list")
+print(Top_5_List)
+#The Top 5 recommended crops.
