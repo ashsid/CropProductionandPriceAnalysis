@@ -1,2 +1,2 @@
-# CropProductionandPriceAnalysis
-Deep data analytics about crops and their prices in India
+# CropProductionandRainfallAnalysis
+Data analytics about crop production and rainfall in India.
