@@ -158,5 +158,5 @@ def menu():
         rain_pattern()
     elif a==3:
         rain_state()
-                
+             
 menu()
