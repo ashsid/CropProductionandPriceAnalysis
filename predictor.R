@@ -1,33 +1,17 @@
-args = commandArgs(TRUE)
-state_input = args[1]
-district_input = args[2]
-crop_input = args[3]
-season = args[4]
-rainfall_division = args[5]
 
+#Test cases
 state_input = "Karnataka"
 district_input = "TUMKUR"
 crop_input = "Maize"
 season = "Kharif"
 rainfall_division = "SOUTH INTERIOR KARNATAKA"
 
-state_input = readline(prompt="Enter state: ")
-district_input = readline(prompt="Enter District: ")
-crop_input = readline(prompt = "Enter crop: ")
-season = readline(prompt = "Enter season: ")
-rainfall_division =  readline(prompt = "Enter subdivision for rainfall: ")
-
-
-print(state_input)
-print(district_input)
-print(crop_input)
-print(season)
-print(rainfall_division)
 #extracting crop data
 crop_production_data = read.csv("crop_production.csv")
 rainfall = read.csv("rainfall in india 1901-2015.csv")
 apy = read.csv("apy.csv")
 
+#calculating yield
 crop_production_data$YIELD = crop_production_data$Production/crop_production_data$Area
 
 #Kharif = april - september
@@ -39,8 +23,6 @@ crop_production_data$YIELD = crop_production_data$Production/crop_production_dat
 rainfall_data = read.csv("rainfall in india 1901-2015.csv")
 rainfall_data = rainfall_data[order(-rainfall_data$YEAR),]
 rainfall_places = as.data.frame(unique(rainfall_data$SUBDIVISION))
-
-#rainfall_division =  readline(prompt = "Enter subdivision for rainfall: ")
 
 rainfall_state = subset(rainfall_data, SUBDIVISION == rainfall_division)
 
@@ -55,7 +37,6 @@ colnames(district_list_main) = c("District")
 #extracting data required for a particular user
 
 #extracting data for particular state
-#state_input = readline(prompt="Enter state: ")
 state_data = subset(crop_production_data,State_Name == state_input)
 district_list = as.data.frame(unique(state_data$District_Name))
 
@@ -110,28 +91,7 @@ crop_data_season_new = crop_data_season_new[order(-crop_data_season_new$year),]
 train = as.data.frame(crop_data_season_new[-1,])
 test = crop_data_season_new[1,]
 print(train)
-#colnames(train)[3] = c("YEAR")
-#colnames(test)[3] = c("YEAR")
-
-#--------------------------------------------------------------------------------------
-
-#if(season == 'Rabi'){
- # rainfall_state = subset(rainfall_data,SUBDIVISION == "JHARKHAND" & YEAR >1980)
-#  june = train$JUN
-#  july = train$JUL
-#  august = train$AUG
-#  sep = train$SEP
-#  year = train$YEAR
-#  train_new = cbind(year,june,july,august,sep)
-#}
-#elseif(season == 'Kharif')
-#{
-#  rainfall_state = subset(rainfall_data,SUBDIVISION == "TAMIL NADU")
-#  train= merge(x=train,y=rainfall_state, by = "YEAR")
-#  test = merge(x=test,y=rainfall_state, by = "YEAR")
-#}
-#--------------------------------------------------------------------------------------
-     
+   
 #xgboost prediction model
 
 library(xgboost)
@@ -142,7 +102,6 @@ model_xg = xgboost(data = as.matrix(train[,1:13]),label = train$yeild,nrounds = 
 #test_rf = test[,c('Crop_Year','YEILD')]
 #library(randonForest)
 #model_rf = randomForest(train_rf$YEILD ~ . , data=train_rf,ntree=3000)
-
 
 #predict
 
