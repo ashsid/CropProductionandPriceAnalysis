@@ -82,3 +82,9 @@ library(plotly)
 colnames(area_distribution) = c("Year","Total_Area_Under_Agriculture")
 plot_ly(data = area_distribution, x=~Year,y=~Total_Area_Under_Agriculture,type="scatter",mode="lines")
 
+
+summary_crop_year[,3] = as.numeric(as.character(summary_crop_year[,3]))
+production_distribution = aggregate(summary_crop_year$average_production, by = list(summary_crop_year$year),na.rm=TRUE,FUN = sum)
+library(plotly)
+colnames(production_distribution) = c("Year","Total_Production_Under_Agriculture")
+plot_ly(data = production_distribution, x=~Year,y=~Total_Production_Under_Agriculture,type="scatter",mode="lines")
