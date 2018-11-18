@@ -14,9 +14,16 @@ district_list = as.data.frame(table(crop_production$District_Name))
 district_list = district_list[order(-district_list$Freq),]
 
 #different crops grown in india
-
-
-crop_list = as.data.frame(unique(crop_production$Crop))
+install.packages("wordcloud")
+install.packages("RColorBrewer")
+library(wordcloud)
+library(RColorBrewer)
+crop_list = as.data.frame(table(crop_production$Crop))
+crop_list = as.data.frame(table(crop_list$`unique(crop_production$Crop)`))
+set.seed(1234)
+wordcloud(words = crop_list$Var1, freq = crop_list$Freq, min.freq = 0,
+          max.words=200, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
 
 #the indian agriculture crops  are divided amoung major - 3 seasons
 #Kharif : June - September
@@ -27,9 +34,17 @@ crop_list = as.data.frame(unique(crop_production$Crop))
 #lets divided crops amoung season : 
 
 Kharif_crops = subset(crop_production, Season == "Kharif")
-Kharif_crops = Kharif_crops[order(Kharif_crops$Crop_Year),]
+Kharif_crops = as.data.frame(table(Kharif_crops$Crop))
+wordcloud(words = Kharif_crops$Var1, freq = Kharif_crops$Freq, min.freq = 1,
+          max.words=200, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
 rabi_crops = subset(crop_production, Season == "Rabi")
-rabi_crops = rabi_crops[order(rabi_crops$Crop_Year),]
+rabi_crops = as.data.frame(table(rabi_crops$Crop))
+wordcloud(words = rabi_crops$Var1, freq = rabi_crops$Freq, min.freq = 1,
+          max.words=200, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
 summer_crops = subset(crop_production, Season == "Summer")
 summer_crops = summer_crops[order(summer_crops$Crop_Year),]
 whole_year = subset(crop_production, Season == "Whole Year")
@@ -59,3 +74,11 @@ for (year in year_list)
     
   }
 }
+
+summary_crop_year[,5] = as.numeric(as.character(summary_crop_year[,5]))
+
+area_distribution = aggregate(summary_crop_year$average_area, by = list(summary_crop_year$year),na.rm=TRUE,FUN = sum)
+library(plotly)
+colnames(area_distribution) = c("Year","Total_Area_Under_Agriculture")
+plot_ly(data = area_distribution, x=~Year,y=~Total_Area_Under_Agriculture,type="scatter",mode="lines")
+
