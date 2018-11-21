@@ -66,6 +66,6 @@ ksp_p <- ggplot(data = ksp_data, aes(x = Year)) +
   geom_line(aes(y = scale(Area), colour = "Area")) +
   geom_line(aes(y = scale(Production), colour = "Production")) +
   geom_line(aes(y = scale(Yield), colour = "Yield")) 
-print(ksp_p + ggtitle("Kerala Spices:") + ylab("Metrics"))
+print(ksp_p + ggtitle("Kerala Spices Metrics Plot:") + ylab("Metrics"))
 
 #Final plot
