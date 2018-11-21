@@ -55,3 +55,17 @@ kr_3 <- ggplot(data = kerala_spice_data, aes(x = Year, y = scale(Yield), group =
 print(kr_3+ ggtitle("Kerala Spices:") + ylab("Yield"))
 
 #Analysation of Spices growth in Kerala, as ascertained by the above plots.
+
+ksp <- data.frame(kerala_spice_data$Year,kerala_spice_data$Area,kerala_spice_data$Production,kerala_spice_data$Yield)
+colnames(ksp) <- c("Year","Area","Production","Yield")
+ksp_data <- data.frame(aggregate(list(ksp$Area,ksp$Production,ksp$Yield), by = list(ksp$Year), na.rm =TRUE, FUN = sum))
+colnames(ksp_data)<- c("Year","Area","Production","Yield")
+
+
+ksp_p <- ggplot(data = ksp_data, aes(x = Year)) +
+  geom_line(aes(y = scale(Area), colour = "Area")) +
+  geom_line(aes(y = scale(Production), colour = "Production")) +
+  geom_line(aes(y = scale(Yield), colour = "Yield")) 
+print(ksp_p + ggtitle("Kerala Spices:") + ylab("Metrics"))
+
+#Final plot
