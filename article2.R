@@ -1,5 +1,5 @@
 #Descriptive Analysis of the Article -:
-#https://timesofindia.indiatimes.com/city/ahmedabad/Gujarats-fruit-and-vegetable-production-goes-up/articleshow/42488909.cms
+#https://economictimes.indiatimes.com/news/economy/agriculture/gujarat-records-highest-decadal-agricultural-growth-rate-of-10-97/articleshow/9243480.cms
 data <- read.csv('crop_production.csv')
 guj <- subset(data, data$State_Name == "Gujarat")
 guj <- data.frame(guj$Crop_Year,guj$Area,guj$Production)
