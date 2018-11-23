@@ -28,8 +28,6 @@ production_sugarcane_avg = aggregate(production_sugarcane$yield,by=list(producti
 colnames(production_sugarcane_avg) = c("YEAR","SEASON","AVG")
 #production_sugarcane_avg = production_sugarcane_avg[order(production_sugarcane_avg$YEAR),]
 
-plot(production_sugarcane_avg$AVG,type='l')
-
 sugarcane = ggplot(data=production_sugarcane_avg, aes(x=YEAR, y = AVG, group = SEASON, colour = SEASON))+
   geom_line()+
   geom_point(size=1, fill="white")
