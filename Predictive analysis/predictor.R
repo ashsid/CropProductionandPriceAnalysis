@@ -6,8 +6,8 @@ season = "Kharif"
 rainfall_division = "SOUTH INTERIOR KARNATAKA"
 
 #extracting crop data
-crop_production_data = read.csv("crop_production.csv")
-rainfall = read.csv("rainfall in india 1901-2015.csv")
+crop_production_data = read.csv("../Dataset/crop_production.csv")
+rainfall = read.csv("../Dataset/rainfall in india 1901-2015.csv")
 #calculating yield
 crop_production_data$YIELD = crop_production_data$Production/crop_production_data$Area
 
