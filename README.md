@@ -11,7 +11,7 @@ You can find 4 folders:<br/>
 
 Each folder contains code/work related to the folder name.<br/>
 
-To run the code, first create a folder named Dataset in the root directory and move all the datasets present into folder Dataset.<br/>
+To run the code, first create a folder named "Dataset" in the root directory and move all the datasets present into folder Dataset.<br/>
 Download the dataset from https://drive.google.com/open?id=1wgY9ZznoqMA-TAWwl9CZOFHTukw8x-8P<br/>
 
 Packages required to run our code :<br/>
