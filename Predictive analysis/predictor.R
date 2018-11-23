@@ -5,6 +5,10 @@ crop_input = "Maize"
 season = "Kharif"
 rainfall_division = "SOUTH INTERIOR KARNATAKA"
 
+#library
+library(plotly)
+library(xgboost)
+
 #extracting crop data
 crop_production_data = read.csv("../Dataset/crop_production.csv")
 #calculating yield
@@ -54,7 +58,7 @@ crop_data = subset(district_data,Crop == crop_input)
 crop_data = crop_data[order(-crop_data$Crop_Year),]
 #season = readline(prompt = "Enter season: ")
 crop_data_season = subset(crop_data,Season==season)
-library(plotly)
+
 #plot the production and area data
 plot_ly(crop_data_season,x=~Crop_Year,y=~Area, type = 'scatter', mode = 'lines')
 plot_ly(crop_data_season,x=~Crop_Year,y=~YIELD, type = 'scatter', mode = 'lines')
@@ -93,7 +97,7 @@ test = crop_data_season_new[1,]
 
 #xgboost prediction model
 
-library(xgboost)
+
 model_xg = xgboost(data = as.matrix(train[,1:13]),label = train$yeild,nrounds = 80)
 
 #model with random forest
