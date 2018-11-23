@@ -20,7 +20,6 @@ district_list = district_list[order(-district_list$Freq),]
 #different crops grown in india
 
 crop_list = as.data.frame(table(crop_production$Crop))
-crop_list = as.data.frame(table(crop_list$`unique(crop_production$Crop)`))
 set.seed(1234)
 wordcloud(words = crop_list$Var1, freq = crop_list$Freq, min.freq = 0,
           max.words=200, random.order=FALSE, rot.per=0.35, 
