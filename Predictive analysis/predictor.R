@@ -7,7 +7,6 @@ rainfall_division = "SOUTH INTERIOR KARNATAKA"
 
 #extracting crop data
 crop_production_data = read.csv("../Dataset/crop_production.csv")
-rainfall = read.csv("../Dataset/rainfall in india 1901-2015.csv")
 #calculating yield
 crop_production_data$YIELD = crop_production_data$Production/crop_production_data$Area
 
@@ -17,7 +16,7 @@ crop_production_data$YIELD = crop_production_data$Production/crop_production_dat
 
 #extracting rainfall data
 
-rainfall_data = read.csv("rainfall in india 1901-2015.csv")
+rainfall_data = read.csv("../Dataset/rainfall in india 1901-2015.csv")
 rainfall_data = rainfall_data[order(-rainfall_data$YEAR),]
 rainfall_places = as.data.frame(unique(rainfall_data$SUBDIVISION))
 
