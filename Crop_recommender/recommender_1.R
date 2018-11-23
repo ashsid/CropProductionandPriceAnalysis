@@ -3,7 +3,7 @@ library(recommenderlab)
 library(ggplot2)
 library(data.table)
 library(reshape2)
-data <- read.csv('crop_production.csv')
+data <- read.csv('../Dataset/crop_production.csv')
 #read the file 
 
 data$Yield <- data$Production / data$Area
