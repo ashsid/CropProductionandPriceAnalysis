@@ -9,18 +9,19 @@
 #Some of the north Karnataka districts effected are : Davangere, Dharwad, Raichur, Gulbarga. 
 #While the recent heavy rains have damaged crop in some areas, in other areas the crop is likely to be more.
 
+library(plotly)
 
 #crop production data : extracting cotton data
-data = read.csv("crop_production.csv")
+data = read.csv("../Dataset/crop_production.csv")
 kar_data = subset(data, State_Name == "Karnataka" & Crop == "Cotton(lint)" &   Crop_Year <= 2011 & Crop_Year >= 2007)
 kar_data = kar_data[order(kar_data$Crop_Year),]
 kar_data$yield = kar_data$Production/kar_data$Area
 
 #rainfall data
-rainfall_data = read.csv("rainfall in india 1901-2015.csv")
+rainfall_data = read.csv("../Dataset/rainfall in india 1901-2015.csv")
 rainfall_north_interior_kar = subset(rainfall_data,SUBDIVISION == "NORTH INTERIOR KARNATAKA" & YEAR >=2007 & YEAR <=2011 )
 
-library(plotly)
+
 #visualizing annual rainfall for the year 2007 - 2011
 plot_ly(rainfall_north_interior_kar,x = ~YEAR) %>%
    add_trace(y = ~ANNUAL, name = "Annual rainfall", mode = "lines + markers")

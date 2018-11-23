@@ -13,7 +13,7 @@ max1 =0
 
 style.use("ggplot")
 
-file=open("rainfall in india 1901-2015.csv")
+file=open("../Dataset/rainfall in india 1901-2015.csv")
 reader = csv.reader(file)
 
 for months in reader:

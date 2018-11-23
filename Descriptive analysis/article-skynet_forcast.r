@@ -1,7 +1,5 @@
-
-
-crop_production = read.csv("crop_production.csv")
-rainfall_data = read.csv("rainfall in india 1901-2015.csv")
+crop_production = read.csv("../Dataset/crop_production.csv")
+rainfall_data = read.csv("../Dataset/rainfall in india 1901-2015.csv")
 rainfall_data = rainfall_data[order(rainfall_data$YEAR),]
 
 #ARTICLE_TITLE : Skymet forecasts well-distributed, adequate monsoon

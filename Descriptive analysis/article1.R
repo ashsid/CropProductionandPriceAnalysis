@@ -1,7 +1,11 @@
 #Descriptive Analysis of the article:
 #https://www.livemint.com/Politics/c0mp0BDBW974jmXjqlTbTM/Where-are-the-horticulture-hotspots-of-India.html
 
-data <- read.csv('crop_production.csv')
+library(ggplot2)
+library(magrittr)
+library(dplyr)
+
+data <- read.csv('../Dataset/crop_production.csv')
 crops <- unique(data[["Crop"]])
 fruits <- data.frame(c('Banana','Citrus Fruits','Grapes','Mango','Orange','Other Fresh Fruits','Papaya','Pome Fruit','Pome Granet','Sapota','Pineapple','Jack Fruit','Other Citrus Fruits','Water Melon','Apple','Peach','Pear','Litchi','Plums','Lemon','Tomato'))
 colnames(fruits)[1] <- "Fruits"

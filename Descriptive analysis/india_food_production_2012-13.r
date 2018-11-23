@@ -1,7 +1,10 @@
 #link to article : https://www.hindustantimes.com/business/india-s-foodgrain-production-to-grow-by-0-6-in-2012-13-cmie/story-wf18uyV180Pi8Q23JP9rGL.html
 
-production_data = read.csv("crop_production.csv")
-rainfall_data = read.csv("rainfall in india 1901-2015.csv")
+library(plotly)
+library(ggplot2)
+
+production_data = read.csv("../Dataset/crop_production.csv")
+rainfall_data = read.csv("../Dataset/rainfall in india 1901-2015.csv")
 
 production_data$yield = production_data$Production/production_data$Area
 production_data = subset(production_data, is.na(yield)==FALSE)
@@ -24,9 +27,9 @@ production_sugarcane = subset(production_from_2011_2013, Crop == "Sugarcane" & i
 production_sugarcane_avg = aggregate(production_sugarcane$yield,by=list(production_sugarcane$Crop_Year,production_sugarcane$Season),na.rm=TRUE, FUN=mean)
 colnames(production_sugarcane_avg) = c("YEAR","SEASON","AVG")
 #production_sugarcane_avg = production_sugarcane_avg[order(production_sugarcane_avg$YEAR),]
-library(plotly)
+
 plot(production_sugarcane_avg$AVG,type='l')
-library(ggplot2)
+
 sugarcane = ggplot(data=production_sugarcane_avg, aes(x=YEAR, y = AVG, group = SEASON, colour = SEASON))+
   geom_line()+
   geom_point(size=1, fill="white")
@@ -55,7 +58,7 @@ plot_ly(oilseeds_avg,x=~YEAR,y=~AVG,mode="lines+markers")
 total_average_production = aggregate(production_data$yield, by=list(production_data$Crop_Year,production_data$Season),na.rm=TRUE,FUN=mean)
 colnames(total_average_production) = c("YEAR","SEASON","AVERAGE")
 total_average_production = subset(total_average_production, YEAR %in% c("2011","2012","2013"))
-total = ggplot(data=total_average_production, aes(x=YEAR, y = AVG, group = SEASON, colour = SEASON))+
+total = ggplot(data=total_average_production, aes(x=YEAR, y = AVERAGE, group = SEASON, colour = SEASON))+
   geom_line()+
   geom_point(size=1, fill="white")
-print(cotton)
+print(total)

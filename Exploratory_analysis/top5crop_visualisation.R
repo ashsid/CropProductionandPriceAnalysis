@@ -1,7 +1,11 @@
-args <- commandArgs(TRUE)
-statename<-as.character(args[1])  
-districtname<-as.character(args[2])
-data <- read.csv('crop_production.csv')
+library(plotly)
+
+#args <- commandArgs(TRUE)
+#statename<-as.character(args[1])  
+#districtname<-as.character(args[2])
+statename <- "Karnataka"
+districtname <- "BAGALKOT"
+data <- read.csv('../Dataset/crop_production.csv')
 data$Yield <- data$Production / data$Area
 state <- as.data.frame(subset(data, data$State_Name == 'Karnataka'))
 district <- subset(state, state$District_Name == "BAGALKOT")
@@ -23,7 +27,6 @@ crop4 <- as.character(top5_crops[["Var1"]][4])
 crop5 <- as.character(top5_crops[["Var1"]][5])
 #Extracting the Top5 Crops for the region.
 
-library(plotly)
 #year <- as.Date(unique(district$Crop_Year), origin = "1995-1-1")
 year <- as.data.frame(district$Crop_Year)
 crop1_data <- subset(district, district$Crop == crop1)

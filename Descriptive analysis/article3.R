@@ -2,8 +2,9 @@
 #Article:
 #http://www.fnbnews.com/Top-News/Spice-production-in-Kerala-increasing-despite-drop-in-cultivation-area
 
+library(ggplot2)
 
-data <- read.csv('crop_production.csv')
+data <- read.csv('../Dataset/crop_production.csv')
 crops <- data.frame(unique(data$Crop))
 spices <- data.frame(c("Black pepper","Turmeric","Dry chillies","Garlic","Cardamom","Ginger","Cond-spcs other","Dry ginger"))
 colnames(spices)[1]<-"Crop"
@@ -69,3 +70,4 @@ ksp_p <- ggplot(data = ksp_data, aes(x = Year)) +
 print(ksp_p + ggtitle("Kerala Spices Metrics Plot:") + ylab("Metrics"))
 
 #Final plot
+

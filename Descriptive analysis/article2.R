@@ -1,7 +1,9 @@
 #Descriptive Analysis of the Article -:
-
 #https://economictimes.indiatimes.com/news/economy/agriculture/gujarat-records-highest-decadal-agricultural-growth-rate-of-10-97/articleshow/9243480.cms
-data <- read.csv('crop_production.csv')
+
+library(ggplot2)
+
+data <- read.csv('../Dataset/crop_production.csv')
 guj <- subset(data, data$State_Name == "Gujarat")
 guj <- data.frame(guj$Crop_Year,guj$Area,guj$Production)
 colnames(guj) <- c("Year","Area","Production")

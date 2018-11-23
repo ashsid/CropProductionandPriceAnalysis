@@ -3,7 +3,11 @@
 #Dataset consists of 246091 rows with 7 columns
 #the 7 attributes are {"State_Name","District_Name","Crop_Year","Season","Crop","Area","Production"}
 
-crop_production = read.csv("crop_production.csv")
+library(plotly)
+library(wordcloud)
+library(RColorBrewer)
+
+crop_production = read.csv("../Dataset/crop_production.csv")
 crop_production$yield = crop_production$Production/crop_production$Area
 #extract state-list
 state_list = as.data.frame(table(crop_production$State_Name))
@@ -14,10 +18,7 @@ district_list = as.data.frame(table(crop_production$District_Name))
 district_list = district_list[order(-district_list$Freq),]
 
 #different crops grown in india
-install.packages("wordcloud")
-install.packages("RColorBrewer")
-library(wordcloud)
-library(RColorBrewer)
+
 crop_list = as.data.frame(table(crop_production$Crop))
 crop_list = as.data.frame(table(crop_list$`unique(crop_production$Crop)`))
 set.seed(1234)
@@ -78,13 +79,12 @@ for (year in year_list)
 summary_crop_year[,5] = as.numeric(as.character(summary_crop_year[,5]))
 
 area_distribution = aggregate(summary_crop_year$average_area, by = list(summary_crop_year$year),na.rm=TRUE,FUN = sum)
-library(plotly)
 colnames(area_distribution) = c("Year","Total_Area_Under_Agriculture")
 plot_ly(data = area_distribution, x=~Year,y=~Total_Area_Under_Agriculture,type="scatter",mode="lines")
 
-
 summary_crop_year[,3] = as.numeric(as.character(summary_crop_year[,3]))
 production_distribution = aggregate(summary_crop_year$average_production, by = list(summary_crop_year$year),na.rm=TRUE,FUN = sum)
-library(plotly)
+
 colnames(production_distribution) = c("Year","Total_Production_Under_Agriculture")
 plot_ly(data = production_distribution, x=~Year,y=~Total_Production_Under_Agriculture,type="scatter",mode="lines")
+
