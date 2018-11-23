@@ -1,4 +1,3 @@
-
 #Test cases
 state_input = "Karnataka"
 district_input = "TUMKUR"
@@ -9,8 +8,6 @@ rainfall_division = "SOUTH INTERIOR KARNATAKA"
 #extracting crop data
 crop_production_data = read.csv("crop_production.csv")
 rainfall = read.csv("rainfall in india 1901-2015.csv")
-apy = read.csv("apy.csv")
-
 #calculating yield
 crop_production_data$YIELD = crop_production_data$Production/crop_production_data$Area
 
@@ -26,8 +23,6 @@ rainfall_places = as.data.frame(unique(rainfall_data$SUBDIVISION))
 
 rainfall_state = subset(rainfall_data, SUBDIVISION == rainfall_division)
 
-print(rainfall_state[1])
-
 state_list  = as.data.frame(unique(crop_production_data$State_Name))
 colnames(state_list) = c("State")
 district_list_main  = as.data.frame(unique(crop_production_data$District_Name))
@@ -40,14 +35,11 @@ colnames(district_list_main) = c("District")
 state_data = subset(crop_production_data,State_Name == state_input)
 district_list = as.data.frame(unique(state_data$District_Name))
 
-print(state_data[1])
 
 #extacting district data
 colnames(district_list) = c("District")
 #district_input = readline(prompt="Enter District: ")
 district_data = subset(state_data,District_Name == district_input)
-
-print(district_data[1])
 
 #extracting crop-data
 #crop_list = as.data.frame(unique(district_data$Crop))
@@ -63,7 +55,7 @@ crop_data = subset(district_data,Crop == crop_input)
 crop_data = crop_data[order(-crop_data$Crop_Year),]
 #season = readline(prompt = "Enter season: ")
 crop_data_season = subset(crop_data,Season==season)
-#library(plotly)
+library(plotly)
 #plot the production and area data
 plot_ly(crop_data_season,x=~Crop_Year,y=~Area, type = 'scatter', mode = 'lines')
 plot_ly(crop_data_season,x=~Crop_Year,y=~YIELD, type = 'scatter', mode = 'lines')
@@ -88,10 +80,18 @@ crop_data_season_new = cbind(year,jan,feb,march,april,may,june,july,august,sep,o
 crop_data_season_new = as.data.frame(crop_data_season_new)
 crop_data_season_new = crop_data_season_new[order(-crop_data_season_new$year),]
 #splitting the data into test and train
+
+#smp_size <- floor(0.75 * nrow(crop_data_season_new))
+#set.seed(123)
+#train_ind <- sample(seq_len(nrow(crop_data_season_new)), size = smp_size)
+#train = crop_data_season_new[train_ind,]
+#test = crop_data_season_new[-train_ind,]
+
+#the below code splits the dataset as , train contains data till 2013 test has data of 2014.
 train = as.data.frame(crop_data_season_new[-1,])
 test = crop_data_season_new[1,]
-print(train)
-   
+
+
 #xgboost prediction model
 
 library(xgboost)
@@ -104,29 +104,7 @@ model_xg = xgboost(data = as.matrix(train[,1:13]),label = train$yeild,nrounds = 
 #model_rf = randomForest(train_rf$YEILD ~ . , data=train_rf,ntree=3000)
 
 #predict
-
+#we are training the model till 2013 and predicting it for 2014.
 y_pred_xg = predict(model_xg,newdata = as.matrix(test[,1:13]))
+print("The expected yield for the given input crop is =")
 print(y_pred_xg)
-#y_pred_rf = predict(model_rf, newdata = test)
-
-#--------------------------------------------------------------------------------------
-
-production_cultivation = read.csv("production_cultivation.csv")
-crop_variety = read.csv("crop_variety.csv")
-
-colnames(production_cultivation) = c("Crop","State","Cultivation_A2_FL","Cultivation_C2","Cost_Production","Yield")
-production_cultivation = production_cultivation[,1:5]
-crop = "MAIZE"
-state = "Karnataka"
-
-production_cultivation = subset(production_cultivation,Crop == crop & State == state)
-
-total_cost = (production_cultivation$Cultivation_A2_FL+production_cultivation$Cultivation_C2)*y_pred_xg
-
-price_commodity = read.csv("product_price.csv")
-price_commodity  =subset(price_commodity,Date == "31-12-2014")
-
-crop_price = "Rice"
-place = "BENGALURU"
-
-price_data = subset(price_commodity,Centre == place & Commodity == crop_price)
